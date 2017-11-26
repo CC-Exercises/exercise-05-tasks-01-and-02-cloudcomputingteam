@@ -10,7 +10,7 @@ Technically, the web UI is based on [Angular](https://angular.io/) interacting w
 1. You need to have Java 8, Git, and Maven installed on your system
 2. Checkout the source code from GitHub 
 3. Run `mvn clean install` to build your application
-4. Start application with `java -jar target/notebookapp-0.2.0.jar server config-min.yml`
+4. Start application with `java -jar target/notebookapp-0.3.0.jar server config-min.yml`
 (on some platforms, `sudo` is required, i.e. you have to run `sudo java -jar ...` instead)
 5. To check that your application is running enter url `http://localhost`
 
