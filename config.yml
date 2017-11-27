@@ -101,7 +101,7 @@ serviceInstanceID: My first Notebook App
 
 textProcessor:
   # local, remoteSingle, remoteMulti, queue 
-  mode: local
+  mode: queue
   # text processor service endpoints
   # - in mode "remoteSingle" only the first endpoint will be used
   # - in mode "remoteMulti" all endpoints will be used
@@ -112,9 +112,9 @@ textProcessor:
   # messsaging system, required for mode "queue"
   mom: SQS
   # request queue, required for mode "queue"
-  requestQueueName: TextProcessorRequests
+  requestQueueName: text-processor-requests
   # response queue, required for mode "queue"
-  responseQueueName: TextProcessorResponses
+  responseQueueName: text-processor-responses
   # only for ActiveMQ
   activeMQurl: tcp://localhost:61616
 
