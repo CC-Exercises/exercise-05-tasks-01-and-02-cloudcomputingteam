@@ -10,6 +10,10 @@ public class TextProcessorConfiguration {
 	public static enum Mode {
 		local, remoteSingle, remoteMulti, queue
 	};
+	
+	public static enum ShedulingStrategy {
+		roundRobin, leastConnection, chainedFailover
+	};
 
 	public static enum MOM {
 		SQS, ActiveMQ
@@ -17,6 +21,8 @@ public class TextProcessorConfiguration {
 
 	@NotNull
 	public Mode mode;
+	
+	public ShedulingStrategy shedulingStrategy;
 
 	@NotNull
 	@Size(min = 1)

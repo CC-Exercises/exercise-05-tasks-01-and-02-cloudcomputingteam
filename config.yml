@@ -102,6 +102,10 @@ serviceInstanceID: My first Notebook App
 textProcessor:
   # local, remoteSingle, remoteMulti, queue 
   mode: remoteMulti
+  # Determines which sheduling strategy is used when mode is remoteMulti
+  # roundRobin, leastConnection, chainedFailover
+  # If empty roundRobin is used as default
+  shedulingStrategy: roundRobin
   # text processor service endpoints
   # - in mode "remoteSingle" only the first endpoint will be used
   # - in mode "remoteMulti" all endpoints will be used

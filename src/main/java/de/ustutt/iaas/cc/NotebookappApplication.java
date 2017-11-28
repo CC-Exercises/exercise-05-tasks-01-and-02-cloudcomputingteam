@@ -23,6 +23,8 @@ import de.ustutt.iaas.cc.core.LocalTextProcessor;
 import de.ustutt.iaas.cc.core.QueueTextProcessor;
 import de.ustutt.iaas.cc.core.RemoteTextProcessor;
 import de.ustutt.iaas.cc.core.RemoteTextProcessorMulti;
+import de.ustutt.iaas.cc.core.RemoteTextProcessorMultiChainedFailover;
+import de.ustutt.iaas.cc.core.RemoteTextProcessorMultiLeastConnection;
 import de.ustutt.iaas.cc.core.SimpleNotebookDAO;
 import de.ustutt.iaas.cc.resources.NotebookResource;
 import io.dropwizard.Application;
@@ -141,7 +143,19 @@ public class NotebookappApplication extends Application<NotebookappConfiguration
 			JerseyClientConfiguration jcfm = configuration.getJerseyClientConfiguration();
 			jcfm.setGzipEnabled(false);
 			final Client clientm = new JerseyClientBuilder(environment).using(jcfm).build(getName());
-			tp = new RemoteTextProcessorMulti(eps, clientm);
+			switch (configuration.textProcessorConfiguration.shedulingStrategy) {
+			case chainedFailover:
+				tp = new RemoteTextProcessorMultiChainedFailover(eps, clientm);
+				break;
+			case leastConnection:
+				tp = new RemoteTextProcessorMultiLeastConnection(eps, clientm);
+				break;
+			case roundRobin:
+			default:
+				tp = new RemoteTextProcessorMulti(eps, clientm);
+				break;
+			}
+			
 			break;
 		case queue:
 			logger.info("Using queue text processor reading from {} and writing to {}",
