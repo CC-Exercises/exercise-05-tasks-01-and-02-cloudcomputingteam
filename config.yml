@@ -29,7 +29,7 @@ server:
 
 logging:
   # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
-  level: INFO
+  level: DEBUG
   loggers:
     de.ustutt.iaas.cc: DEBUG
     # shows SQL statements
@@ -101,13 +101,17 @@ serviceInstanceID: My first Notebook App
 
 textProcessor:
   # local, remoteSingle, remoteMulti, queue 
-  mode: local
+  mode: remoteMulti
+  # Determines which sheduling strategy is used when mode is remoteMulti
+  # roundRobin, leastConnection, chainedFailover
+  # If empty roundRobin is used as default
+  shedulingStrategy: roundRobin
   # text processor service endpoints
   # - in mode "remoteSingle" only the first endpoint will be used
   # - in mode "remoteMulti" all endpoints will be used
   textProcessors:
-    - http://localhost:8090/api
-    - http://localhost:8092/api
+    - http://localhost:82/api
+    - http://localhost:83/api
   # SQS, ActiveMQ
   # messsaging system, required for mode "queue"
   mom: SQS

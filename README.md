@@ -40,7 +40,8 @@ The notebook application supports three different implementations / integrations
 
 1. `local` - local text processor, no external dependencies
 2. `remoteSingle` - single remote text processor with a REST API
-3. `queue` - arbitrary amount of remote text processors, load-balanced using message queues
+3. `remmoteMulti` - multi remote text processors with a RESt API
+4. `queue` - arbitrary amount of remote text processors, load-balanced using message queues
 
 The internal interface for a text processor is defined by `de.ustutt.iaas.cc.core.ITextProcessor`. During startup, the configuration file is read and a corresponding implementation of this interface is instantiated.   
 
@@ -68,6 +69,26 @@ textProcessor:
 An example implementation of such a remote text processor can be found [here](https://github.com/F7502/textprocessor-service). It is also possible to implement such a service for example as a Google Cloud Function. Technically, the text processor service has to provide a HTTP endpoint that accepts POST requests with `text/plain` payload and that also returns some `text/plain` payload. 
 
 Implemented by `de.ustutt.iaas.cc.core.RemoteTextProcessor`.
+
+#### "remoteMulti"
+
+multi remote text processors, requires the endpoints of the text processor resource
+
+```
+textProcessors:
+  - http://localhost:8082/api
+  - http://localhost:8083/api
+```
+
+further more, requires the load balancing strategy which shall be used.  If empty roundRobin is used as default.
+
+1. ´roundRobin´ - Round Robin sheduling of incoming requests
+2. ´leastConnection´ - Forwards the request to the resource with the least connections
+3. ´chainedFailover´ - Forwards the request to the resource with the most connections until a work load limit is reached at the destination resource
+
+```
+shedulingStrategy: roundRobin
+```
 
 #### "queue"
 
